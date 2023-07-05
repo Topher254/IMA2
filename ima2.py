@@ -14,7 +14,7 @@ trig_pin = Pin(32,Pin.OUT)
 vibrator = Pin(26,Pin.OUT)
 #panic button 
 panic_button = Pin(14,Pin.IN)
-
+logic = panic_button.value()
 while True:
   trig_pin.value(0)
   time.sleep_us(5)
@@ -25,9 +25,6 @@ while True:
   distance = speed_of_sound*echo_duration / 20000
   
   
-
-  print("DISTANCE IS : ", distance)
-  time.sleep_ms(600)
 #if the distance between is less than 30 cm , vibrator turns on
   def vibrator_motor(distance_1):
     if distance_1 > min_distance:
@@ -40,12 +37,15 @@ while True:
   vibrator_motor(distance)
   #function for the buzzer
   def buzzer_part():
-      logic = panic_button.value()
       if logic == 1:
-          vibrator_motor(distance)
+          vibrator.value(1)
+          time.sleep(2)
+          vibrator.value(0)
+          #message should be sent to caretaker
       else:
           vibrator.value(0)
   buzzer_part()
       
-    
+  print("DISTANCE IS : ", distance,"panic: ",logic)
+  time.sleep_ms(600)
 
