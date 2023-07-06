@@ -11,10 +11,14 @@ min_distance = 30000
 echo_pin = Pin(35,Pin.IN)
 trig_pin = Pin(32,Pin.OUT)
 # configure vibration motro pin --we will replace led later
-vibrator = Pin(26,Pin.OUT)
+vibrator = Pin(18,Pin.OUT)
 #panic button 
 panic_button = Pin(14,Pin.IN)
 logic = panic_button.value()
+
+#microphone sensor
+microphone_button = Pin(4,Pin.OUT)
+decibel = microphone_button.value()
 while True:
   trig_pin.value(0)
   time.sleep_us(5)
@@ -45,7 +49,17 @@ while True:
       else:
           vibrator.value(0)
   buzzer_part()
+  
+  #MICROPHONE FUNCTION
+  def microphone():
+      if decibel == 1:
+          vibrator.value(1)
+          time.sleep(1)
+          vibrator.value(0)
+      else:
+          vibrator.value(0)
+  microphone()
       
-  print("DISTANCE IS : ", distance,"panic: ",logic)
+  print("DISTANCE IS : ", distance," panic: ",logic," decibel : ",decibel)
   time.sleep_ms(600)
 
