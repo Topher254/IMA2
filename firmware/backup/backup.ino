@@ -8,7 +8,7 @@
 #define TRIG_PIN_2 33
 #define ECHO_PIN 32
 #define ECHO_PIN_2 35
-#define buzzer 27
+#define buzzer 25
 #define push_me 26
 #define TX 17
 #define RX 16
@@ -52,7 +52,8 @@ void loop() {
   float sonic1 = getDistance1();
   float sonic2 = getDistance2();
   GPS_Data gps = readGPS();
-  Serial.println(runHTTPclient("data","{\"sonic1\":"+String(sonic1)+",\"sonic2\":"+String(sonic2)+"}"));
+  // Serial.println(runHTTPclient("data","{\"sonic1\":"+String(sonic1)+",\"sonic2\":"+String(sonic2)+"}"));
+  // Serial.println(runHTTPclient("data","{\"lat\":"+String(gps.latitude)+",\"long\":"+String(gps.longitude)+"}"));
   /*if (distance_cm < 50)
     digitalWrite(buzzer,HIGH);
   else
@@ -64,8 +65,12 @@ void loop() {
   Serial.print("Butt = ");
   Serial.println(push_button_state);
 
-  if (push_button_state == 1)
+  if (push_button_state == 1){
+    Serial.println("Shouting !!!");
     digitalWrite(buzzer,HIGH);
+    delay(5000);
+    Serial.println("\tPin Drop");
+  }
   else
     digitalWrite(buzzer,LOW);
 }
